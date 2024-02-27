@@ -7,51 +7,41 @@ window.onload = function() {
     var currentWidth = jeff.offsetWidth; 
     var defaultJeffSrc = jeff.src; 
 
-    function handleClick() {
-        var decrementPerPress = currentWidth / (worth / 3211111);
-        currentWidth -= decrementPerPress;
-        worth -= 3211111;
-        clicks += 1;
-        currentWidth = Math.max(currentWidth, 0);
-        worth = Math.max(worth, 0);
-        jeff.src = 'images/sadJeff.png';
-        jeff.style.width = currentWidth + 'px'; 
-        jeff.classList.add('shaking');
-        moneyElement.innerHTML = worth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + " USD"; 
-        clickCount.innerHTML = clicks + " clicks";
-        setTimeout(function(){
-            jeff.classList.remove('shaking');
-            jeff.src = defaultJeffSrc; 
-        }, 500);
-
-        // Mcdo Jeff
-        if(clicks === 68){
-            alert("You've unlocked Mcdo Jeff!");
-        };
-
-        if(clicks >= 68){
-            jeff.src = 'images/mcdoJeff.png';
-        }
-    }
-
     document.addEventListener('keyup', function(event) {
+        //main functies
         if(event.code === 'Space') {
-            handleClick();
-        }
-    });
+            
+            var decrementPerPress = currentWidth / (worth / 3211111);
 
-    // Touch events
-    var touchStartX = 0;
-    var touchEndX = 0;
+            currentWidth -= decrementPerPress;
 
-    jeff.addEventListener('touchstart', function(event) {
-        touchStartX = event.touches[0].clientX;
-    });
+            worth -= 3211111;
 
-    jeff.addEventListener('touchend', function(event) {
-        touchEndX = event.changedTouches[0].clientX;
-        if (touchEndX - touchStartX > 50) { // Adjust the threshold as needed
-            handleClick();
+            clicks += 1;
+
+            currentWidth = Math.max(currentWidth, 0);
+            worth = Math.max(worth, 0);
+
+            jeff.src = 'images/sadJeff.png';
+
+            jeff.style.width = currentWidth + 'px'; 
+            jeff.classList.add('shaking');
+            moneyElement.innerHTML = worth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + " USD"; 
+            clickCount.innerHTML = clicks + " clicks";
+
+            setTimeout(function(){
+                jeff.classList.remove('shaking');
+                jeff.src = defaultJeffSrc; 
+            }, 500);
+
+            // Mcdo Jeff
+            if(clicks === 68){
+                alert("You've unlocked Mcdo Jeff!");
+            };
+
+            if(clicks >= 68){
+                jeff.src = 'images/mcdoJeff.png';
+            }
         }
     });
 };
