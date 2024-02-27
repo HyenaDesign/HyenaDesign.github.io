@@ -7,13 +7,6 @@ window.onload = function () {
     var currentWidth = jeff.offsetWidth;
     var defaultJeffSrc = jeff.src;
 
-    // Function to update the UI with the current game state
-    function updateUI() {
-        jeff.style.width = currentWidth + 'px';
-        moneyElement.innerHTML = worth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + " USD";
-        clickCount.innerHTML = clicks + " clicks";
-    }
-
     // Function to save game state to local storage
     function saveGameState() {
         localStorage.setItem('clickerGameState', JSON.stringify({ clicks, worth, currentWidth }));
@@ -30,9 +23,12 @@ window.onload = function () {
         }
     }
 
-    // Load the game state on page load
-    loadGameState();
-    updateUI();
+    // Function to update the UI with the current game state
+    function updateUI() {
+        jeff.style.width = currentWidth + 'px';
+        moneyElement.innerHTML = worth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + " USD";
+        clickCount.innerHTML = clicks + " clicks";
+    }
 
     // Function to handle clicks
     function handleClick() {
@@ -63,6 +59,10 @@ window.onload = function () {
         saveGameState();
     }
 
+    // Load the game state on page load
+    loadGameState();
+    updateUI();
+
     // Add click event listener
     document.addEventListener('click', handleClick);
 
@@ -81,7 +81,4 @@ window.onload = function () {
             handleClick();
         }
     });
-
-    // Rest of your existing code...
-
 };
