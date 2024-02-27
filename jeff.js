@@ -2,25 +2,20 @@ window.onload = function () {
     var moneyElement = document.getElementById('money');
     var clickCount = document.getElementById('clicks');
     var jeff = document.getElementById('jeffImage');
-    var clicks = 0;
-    var worth = 196000000000;
-    var currentWidth = jeff.offsetWidth;
     var defaultJeffSrc = jeff.src;
 
     // Function to save game state to local storage
     function saveGameState() {
-        localStorage.setItem('clickerGameState', JSON.stringify({ clicks, worth, currentWidth }));
+        localStorage.setItem('clickerClicks', clicks);
+        localStorage.setItem('clickerWorth', worth);
+        localStorage.setItem('clickerCurrentWidth', currentWidth);
     }
 
     // Function to load game state from local storage
     function loadGameState() {
-        const savedState = localStorage.getItem('clickerGameState');
-        if (savedState) {
-            const { clicks: savedClicks, worth: savedWorth, currentWidth: savedWidth } = JSON.parse(savedState);
-            clicks = savedClicks;
-            worth = savedWorth;
-            currentWidth = savedWidth;
-        }
+        clicks = parseInt(localStorage.getItem('clickerClicks')) || 0;
+        worth = parseFloat(localStorage.getItem('clickerWorth')) || 196000000000;
+        currentWidth = parseFloat(localStorage.getItem('clickerCurrentWidth')) || jeff.offsetWidth;
     }
 
     // Function to update the UI with the current game state
