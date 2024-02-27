@@ -2,6 +2,9 @@ window.onload = function () {
     var moneyElement = document.getElementById('money');
     var clickCount = document.getElementById('clicks');
     var jeff = document.getElementById('jeffImage');
+    var clicks = 0;
+    var worth = 196000000000;
+    var currentWidth = jeff.offsetWidth;
     var defaultJeffSrc = jeff.src;
 
     // Function to save game state to local storage
@@ -52,6 +55,9 @@ window.onload = function () {
 
         // Save the game state after each click
         saveGameState();
+
+        // Trigger GitHub Actions to update user_count.txt
+        updateGitHubActions();
     }
 
     // Load the game state on page load
@@ -76,4 +82,10 @@ window.onload = function () {
             handleClick();
         }
     });
+
+    // Function to trigger GitHub Actions
+    function updateGitHubActions() {
+        var githubActionsEvent = new CustomEvent('github-actions');
+        document.dispatchEvent(githubActionsEvent);
+    }
 };
