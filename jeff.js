@@ -7,12 +7,34 @@ window.onload = function () {
     var currentWidth = jeff.offsetWidth;
     var defaultJeffSrc = jeff.src;
 
+    // Function to update the UI with the current game state
     function updateUI() {
         jeff.style.width = currentWidth + 'px';
         moneyElement.innerHTML = worth.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + " USD";
         clickCount.innerHTML = clicks + " clicks";
     }
 
+    // Function to save game state to local storage
+    function saveGameState() {
+        localStorage.setItem('clickerGameState', JSON.stringify({ clicks, worth, currentWidth }));
+    }
+
+    // Function to load game state from local storage
+    function loadGameState() {
+        const savedState = localStorage.getItem('clickerGameState');
+        if (savedState) {
+            const { clicks: savedClicks, worth: savedWorth, currentWidth: savedWidth } = JSON.parse(savedState);
+            clicks = savedClicks;
+            worth = savedWorth;
+            currentWidth = savedWidth;
+        }
+    }
+
+    // Load the game state on page load
+    loadGameState();
+    updateUI();
+
+    // Function to handle clicks
     function handleClick() {
         var decrementPerPress = currentWidth / (worth / 3211111);
         currentWidth = Math.max(currentWidth - decrementPerPress, 0);
@@ -36,8 +58,12 @@ window.onload = function () {
         if (clicks >= 68) {
             jeff.src = 'images/mcdoJeff.png';
         }
+
+        // Save the game state after each click
+        saveGameState();
     }
 
+    // Add click event listener
     document.addEventListener('click', handleClick);
 
     // Touch events
@@ -55,4 +81,7 @@ window.onload = function () {
             handleClick();
         }
     });
+
+    // Rest of your existing code...
+
 };
