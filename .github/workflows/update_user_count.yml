@@ -1,0 +1,23 @@
+name: Update User Count
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  update_user_count:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Update User Count
+        run: echo "Total Users: $
+{{ github.event.workflow_run.conclusion
+== 'success' &&
+github.event.workflow_run.event ==
+'github-actions' &&
+github.event.workflow_run.jobs.update_user_count.outputs.user_count || 0 }}" > user_count.txt
